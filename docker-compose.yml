@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+    ports:
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.graph.enabled=false
+      - xpack.watcher.enabled=false
+      - action.destructive_requires_name=false
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.8.1
+    ports:
+      - 5601:5601
+    environment:
+      - xpack.security.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.graph.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.watcher.enabled=false
+      - xpack.logstash.enabled=false
+      - xpack.sql.enabled=false
+      - xpack.rollup.enabled=false
+      - ingest.geoip.downloader.enabled=false
+      - action.destructive_requires_name=false
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
